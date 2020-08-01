@@ -52,6 +52,8 @@ class Generate {
         }
         this.buffer.append(arrStr.join(' '))
         this.table_format(table)
+        // 添加换行
+        this.buffer.append('\r\n')
     }
 
     table_format(table = []) {
