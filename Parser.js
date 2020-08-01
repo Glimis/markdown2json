@@ -79,8 +79,7 @@ function keyDeclare(tokenReader) {
             tokenReader.read()
             // 后面必须为 // 或者 换行
             // 可选 // 
-
-            if (TokenState.Slash) {
+            if (tokenReader.nextIs(TokenState.Slash)) {
                 tokenReader.read()
                 while (!tokenReader.nextIs(TokenState.Br)) {
                     // 合并注释
