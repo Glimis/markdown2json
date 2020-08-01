@@ -27,10 +27,11 @@ class Generate {
     }
 
     print(ast) {
+
         ast.forEach(({ type, node }) => {
             switch (type) {
                 case 'json':
-                    this.jsons_format(node)
+                    this.json_format(node)
                     break;
                 case 'table':
                     this.table_format(node)
@@ -40,11 +41,6 @@ class Generate {
 
 
         return this.buffer.format()
-    }
-    jsons_format(ast) {
-        ast.forEach((item, index) => {
-            this.json_format(item, index)
-        })
     }
 
     json_format({ key, comments = [], table }) {
