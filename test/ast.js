@@ -61,5 +61,4 @@ console.log(parser(lexer(markdown1)))
 
 console.log(parser(lexer(markdown2)))
 
-let a = parser(lexer(markdown2))
-debugger
+parser(lexer(markdown2))

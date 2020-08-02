@@ -57,6 +57,8 @@ class Generate {
     }
 
     table_format(table = []) {
+        // 计算宽度前,需要对数据进行清洗
+        cleanTable(table)
         // 设置当前table的宽度
         this.rowsWidth = getRowsWidth(table)
         this.tableWidth = getTableWidth(this.rowsWidth)
@@ -84,22 +86,34 @@ class Generate {
 
     // 补全空格
     cell_format(name, index) {
+
         // 设置需要
         let width = this.tableWidth[index]
         // 前方已渲染
         let renderWidth = this.rowRenderWidth
         // 前方实际需要
-        let rowRenderNeedWidth = this.rowRenderWidth
+        let rowRenderNeedWidth = this.rowRenderNeedWidth
         // 已有
         let hasWidth = this.rowWidth[index]
 
         // 需要补空格数 = 设置需要 - 已有 + (实际需要>已渲染?1:0)
-        let needNumber = width - hasWidth + Math.round(rowRenderNeedWidth - renderWidth)
+        let needNumber = width - hasWidth + rowRenderNeedWidth - renderWidth
         // 实际补空格数 --》 取证
         let number = Math.round(needNumber)
-
+        number = number < 0 ? 0 : number
+        this.rowRenderWidth += (number + hasWidth)
+        this.rowRenderNeedWidth += width
         return name + new Array(number).fill(' ').join('');
     }
+}
+
+// 去掉单元格内的前后空格
+function cleanTable(table) {
+    table.forEach((row) => {
+        row.forEach((item, index) => {
+            row[index] = item.trim()
+        })
+    })
 }
 
 function getRowsWidth(table) {
@@ -107,6 +121,7 @@ function getRowsWidth(table) {
 }
 // 计算宽度  --> 获取每行最长
 function getTableWidth(rowsWidth) {
+
     let rowWidth = rowsWidth
         // 读取每行每列最大数
         .reduce((maxRow, newMaxRow) => {
