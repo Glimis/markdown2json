@@ -143,6 +143,7 @@ function rowDeclare(tokenReader) {
         cells.push(cellNode.value)
     }
 
+
     while (tokenReader.nextIs(TokenState.Br)) {
         tokenReader.read()
     }

@@ -89,6 +89,8 @@ class Lextter {
         } catch (error) {
 
         }
+        // 最后一个词
+        this.initToken();
     }
 
 
